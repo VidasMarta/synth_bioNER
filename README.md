@@ -5,7 +5,7 @@ This repository implements a synthetic-data generation and training pipeline for
 The pipeline samples disease terms from biomedical terminologies and uses a decoder language model to generate and annotate synthetic text. The synthetic examples are used to pretrain a smaller BERT-based BioNER model with a bidirectional recurrent layer, multi-head attention (MHA), and a conditional random field (CRF). The model is then fine-tuned on 1%, 5%, 10%, 20%, 50%, or 100% of a gold-labelled downstream dataset.
 
 TODO: The paper associated with this code [`paper`](https://TBD) TBD.
-TODO: Synthetic data available at: [`data`](https://TBD) TBD.
+Synthetic data available at [`ieee-dataport`](https://dx.doi.org/10.21227/jq10-2p73).
 
 ## Main results
 TODO: plots and images 
@@ -27,7 +27,7 @@ TODO: plots and images
 ## Repository contents
 
 ```text
-bioNER/
+synth_bioNER/
 ├── train.py                       # BioNER training and evaluation entry point
 ├── models.py                      # BiRNN, MHA, BERT, character CNN, and CRF model
 ├── datasets.py                    # Processed dataset loader
@@ -80,11 +80,10 @@ en_core_web_trf, es_dep_news_trf, de_dep_news_trf, fr_dep_news_trf
 
 ## Installation and environment setup
 
-Clone the paper branch and enter the repository:
-TODO:
+Clone the repository:
 ```bash
-git clone --branch paper https://github.com/VidasMarta/bioNER.git
-cd bioNER
+git clone --branch paper https://github.com/VidasMarta/synth_bioNER.git
+cd synth_bioNER
 ```
 
 Create a Python environment and install the current dependency list:
@@ -109,7 +108,7 @@ Edit `settings.py` and configure all paths:
 MODEL_PATH = "/absolute/path/to/model-checkpoints"
 DATA_PATH = "/absolute/path/to/processed-data"
 OUTPUT_PATH = "/absolute/path/to/output"
-EXPERIMENTS_PATH = "/absolute/path/to/bioNER/experiments"
+EXPERIMENTS_PATH = "/absolute/path/to/synth_bioNER/experiments"
 LOG_PATH = "/absolute/path/to/logs"
 EMBEDDINGS_PATH = "/absolute/path/to/local-transformer-models"
 ```
@@ -156,8 +155,8 @@ A full reproduction is expected to take approximately **seven days on a server w
 
 ```bibtex
 @article{TODO,
-  title   = {TODO: Paper title},
-  author  = {TODO: Authors},
+  title   = {Multi-head Attention based Synthetic Data Generation and BioNER},
+  author  = {MArta Vidas, Miha Keber, Anja Barešić, Jelena Bozek},
   journal = {TODO: Venue},
   year    = {TODO: Year},
   doi     = {TODO: DOI},

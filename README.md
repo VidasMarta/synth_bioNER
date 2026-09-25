@@ -1,8 +1,6 @@
 # Synthetic Fine-Tuning for Multilingual Biomedical Named Entity Recognition
 
-This repository implements a synthetic-data generation and training pipeline for biomedical named entity recognition (BioNER) in English, Spanish, German, and French. It addresses a central problem in BioNER: strong supervised models normally require large, expensive, expert-annotated datasets.
-
-The pipeline samples disease terms from biomedical terminologies and uses a decoder language model to generate and annotate synthetic text. The synthetic examples are used to pretrain a smaller BERT-based BioNER model with a bidirectional recurrent layer, multi-head attention (MHA), and a conditional random field (CRF). The model is then fine-tuned on 1%, 5%, 10%, 20%, 50%, or 100% of a gold-labelled downstream dataset.
+This repository implements a synthetic-data generation and training pipeline for biomedical named entity recognition (BioNER) in English, Spanish, German, and French. The pipeline samples disease terms from biomedical terminologies and uses a decoder language model to generate and annotate synthetic text. The synthetic examples are used to pretrain a smaller BERT-based BioNER model with a bidirectional recurrent layer, multi-head attention (MHA), and a conditional random field (CRF). The model is then fine-tuned on 1%, 5%, 10%, 20%, 50%, or 100% of a gold-labelled downstream dataset.
 
 TODO: The paper associated with this code [`paper`](https://TBD) TBD.
 Synthetic data available at [`ieee-dataport`](https://dx.doi.org/10.21227/jq10-2p73).
@@ -56,6 +54,7 @@ Experiment directories contain three configuration families:
 - `baseline/*.yml`: train only on a gold-data subset.
 - `0shot/pretrain.yml` and `0shot/ft_*.yml`: pretrain on zero-shot synthetic data, then fine-tune on gold data.
 - `3shot_<percentage>/pretrain.yml` and `3shot_<percentage>/ft_*.yml`: pretrain on three-shot synthetic data generated using examples from the indicated percentage of the gold training set, then fine-tune on gold data.
+- `data/<dataset>/0shot_generation.yml` and `data/<dataset>/3shot_generation.yml`: generate synthetic data. 
 
 ## Requirements
 

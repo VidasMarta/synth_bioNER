@@ -84,6 +84,7 @@ Clone the repository:
 git clone --branch paper https://github.com/VidasMarta/synth_bioNER.git
 cd synth_bioNER
 ```
+### Synthetic data generation environment
 
 Create a Python environment and install the current dependency list:
 
@@ -94,6 +95,32 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r start-bioner-docker/requirements_base.txt
 ```
+
+#### Container setup
+
+The intended image is based on:
+
+```text
+pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
+```
+
+The intended build interface is:
+
+```bash
+docker build -t syn-bioner -f start-bioner-docker/Dockerfile .
+```
+
+- Document `docker run` with NVIDIA GPU support.
+
+### BioNER model environment
+The Apptainer environment definition and Python dependencies are located in start-bioner-apptainer/.
+
+Build the Apptainer image:
+
+```bash
+apptainer build data_stack.sif start-bioner-apptainer/data_stack.def
+```
+The data_stack.def file installs the Python packages listed in start-bioner-apptainer/requirements.txt.
 
 Create the local settings file:
 
@@ -114,21 +141,11 @@ EMBEDDINGS_PATH = "/absolute/path/to/local-transformer-models"
 
 Create the model and log directories before training. `settings.py` is ignored by Git so machine-specific paths are not committed.
 
-### Container setup
-
-The intended image is based on:
-
+Run the training:
 ```text
-pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
+apptainer exec --nv --bind "$PWD:/mnt" data_stack.sif python3 /mnt/train.py --model_name="<MODEL_NAME>"
 ```
-
-The intended build interface is:
-
-```bash
-docker build -t syn-bioner -f start-bioner-docker/Dockerfile .
-```
-
-- Document `docker run` with NVIDIA GPU support.
+The --nv option enables NVIDIA GPU support. The --bind "$PWD:/mnt" option makes the project directory available inside the container at /mnt.
 
 ## Data
 
